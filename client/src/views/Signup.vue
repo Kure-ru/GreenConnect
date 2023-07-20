@@ -1,6 +1,7 @@
 <template>
   <div class="login-container">
-    <form @submit.prevent="login">
+    <h1>Deviens un <span>Greener</span> </h1>
+    <form @submit.prevent="signup">
       <div class="form-group">
         <label for="username">Nom d'utilisateur</label>
         <input type="text" id="username" v-model="username" required />
@@ -9,6 +10,16 @@
       <div class="form-group">
         <label for="password">Mot de passe</label>
         <input type="password" id="password" v-model="password" required />
+      </div>
+
+      <div class="form-group">
+        <label for="confirm-password">Confirme ton mot de passe</label>
+        <input
+          type="password"
+          id="confirm-password"
+          v-model="confirmPassword"
+          required
+        />
       </div>
 
       <button type="submit">Se connecter</button>
@@ -28,29 +39,25 @@ export default {
     return {
       username: "",
       password: "",
+      confirmPassword: "",
       errorMessage: "",
     };
   },
   methods: {
-    async login() {
+    async signup() {
       try {
-        if (this.username && this.password) {
+        if (this.username && this.password === this.confirmPassword) {
           this.errorMessage = "";
           const user = {
             username: this.username,
             password: this.password,
           };
-          const response = await userService.login(user);
-          // store the token in local storage
-          console.log(response)
-          window.localStorage.setItem("jwttoken", response.token);
-          window.localStorage.setItem("id", response.id);
-          postService.setToken(response.token);
+          const response = await userService.create(user);
           // redirect to feed page
-          router.push("/feed");
+          router.push("/login");
         }
       } catch (error) {
-        this.errorMessage = "An error occurred";
+        this.errorMessage = error.response.data.error || "An error occurred";
       }
     },
   },
@@ -61,7 +68,6 @@ export default {
 .login-container {
   max-width: 400px;
   margin: 0 auto;
-  padding: 20px;
 }
 
 .form-group {
@@ -74,7 +80,7 @@ label {
 
 input {
   width: 100%;
-  padding: 10px;
+  padding: 10px 0;
 }
 
 button {

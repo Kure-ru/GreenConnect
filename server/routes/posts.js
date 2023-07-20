@@ -15,6 +15,7 @@ const getTokenFrom = (request) => {
 
 postsRouter.get("/", async (request, response) => {
   const posts = await Post.find({}).populate("user", { username: 1, name: 1 });
+  console.log(posts)
   response.json(posts);
 });
 

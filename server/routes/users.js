@@ -35,7 +35,7 @@ usersRouter.post("/login", async (req, res) => {
 });
 
 // création de profil
-usersRouter.post("/profile", async (req, res) => {
+usersRouter.post("/", async (req, res) => {
   const { username, password } = req.body;
 
   const saltRounds = 10;
@@ -50,10 +50,31 @@ usersRouter.post("/profile", async (req, res) => {
 });
 
 // modification profil
-usersRouter.put("/:id", (req, res) => {});
+usersRouter.put("/:id", async (request, response, next) => {
+  const body = request.body;
+  const user = {
+    username: body.username,
+    interests: body.interests,
+  };
+
+  User.findByIdAndUpdate(request.params.id, user, { new: true })
+    .then((updatedUser) => {
+      response.json(updatedUser);
+    })
+    .catch((error) => next(error));
+});
 
 // afficher profil
-usersRouter.get("/:id", (req, res) => {});
+usersRouter.get("/:id", async (request, response) => {
+  const user = await User.findById(request.params.id);
+  console.log(request.params.id)
+  if (user) {
+    console.log(`user is ${user}`)
+    response.json(user);
+  } else {
+    response.status(404).end();
+  }
+});
 
 // afficher tous les utilisateurs
 usersRouter.get("/", (req, res) => {

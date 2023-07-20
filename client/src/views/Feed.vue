@@ -1,7 +1,7 @@
 <template>
   <h1>Mes actualités</h1>
 
-  <form @submit.prevent="newPost">
+  <form class="feed__form" @submit.prevent="newPost">
     <h2>Quoi de neuf?</h2>
     <div>
       <label for="title">titre</label>
@@ -18,19 +18,20 @@
   <section class="feed__container">
     <div v-for="item in feedItems" :key="item.id" class="feed__item">
       <div>
-        <!-- <span>{{ item.user.username }}</span> -->
+        <span>{{ item.user?.username }}</span>
         {{ formattedDate(item.createdAt) }}
       </div>
       <p>{{ item.title }}</p>
       <p>{{ item.content }}</p>
-      <button>Rejoindre</button>
+      <button>Enregistrer</button>
     </div>
   </section>
 </template>
 
 <script>
-import { format } from 'date-fns';
+import { format } from "date-fns";
 import postService from "../services/posts";
+import userService from "../services/users";
 
 const token = window.localStorage.getItem("jwttoken");
 postService.setToken(token);
@@ -53,6 +54,7 @@ export default {
             title: this.title,
             content: this.content,
           });
+          this.getAllPosts();
         }
       } catch (error) {
         this.errorMessage = error.response.data.error || "An error occurred";
@@ -61,8 +63,16 @@ export default {
     async getAllPosts() {
       try {
         const response = await postService.getAll();
-        console.log(response)
         this.feedItems = response;
+      } catch (error) {
+        this.errorMessage =
+          error.message || "An error occurred while fetching posts.";
+      }
+    },
+    async getUser(userId) {
+      try {
+        const response = await userService.getUser(userId);
+        return response.data.username;
       } catch (error) {
         this.errorMessage =
           error.message || "An error occurred while fetching posts.";
@@ -76,10 +86,26 @@ export default {
   computed: {
     formattedDate() {
       return (createdAt) => {
-      const date = new Date(createdAt);
-      return `le ${format(date, 'dd/MM/yyyy')} à ${format(date, 'HH:mm')}`;
-    }}
-  }
+        const date = new Date(createdAt);
+        return `le ${format(date, "dd/MM/yyyy")} à ${format(date, "HH:mm")}`;
+      };
+    },
+    getAuthorName() {
+      return (userId) => {
+        this.getUser(userId)
+          .then((name) => {
+            console.log(name)
+            return name;
+          })
+          .catch((err) => {
+            this.errorMessage =
+              err.message ||
+              "An error occurred while fetching the author's name.";
+            return "";
+          });
+      };
+    },
+  },
 };
 </script>
 
@@ -106,7 +132,7 @@ button {
   margin: 1rem;
 }
 
-form {
+.feed__form {
   padding: 3rem;
 }
 </style>

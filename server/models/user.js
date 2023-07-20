@@ -16,11 +16,6 @@ const userSchema = new mongoose.Schema({
       type: String,
     },
   ],
-  languages: [
-    {
-      type: String,
-    },
-  ],
   posts: [
     {
       type: mongoose.Schema.Types.ObjectId,
