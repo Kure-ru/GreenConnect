@@ -22,6 +22,11 @@ const userSchema = new mongoose.Schema({
       ref: 'Post'
     },
   ],
+  savedPosts: [
+    {
+      type: Object
+    }
+  ]
 });
 
 userSchema.plugin(uniqueValidator);

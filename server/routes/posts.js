@@ -19,6 +19,11 @@ postsRouter.get("/", async (request, response) => {
   response.json(posts);
 });
 
+postsRouter.delete("/:id", async (request, response) => {
+  await Post.findByIdAndRemove(request.params.id);
+  response.status(204).end();
+});
+
 postsRouter.post("/", userExtractor, async (request, response) => {
   console.log(request.body)
     const { title, content } = request.body;

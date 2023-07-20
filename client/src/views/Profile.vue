@@ -16,19 +16,30 @@
       <input
         v-model="interest"
         @keydown.enter.prevent="addInterest"
-        placeholder="Ajouter un intérêt"
+        placeholder="ajouter un intérêt ↵ "
       />
     </div>
     <button type="submit">Sauvegarder le profil</button>
   </form>
   <div>
-    <h2>Mes posts</h2>
+    <h2>Mes posts sauvegardés</h2>
+
+    <section class="saved__container">
+      <div v-for="post in savedPosts" :key="post.id" class="saved__item">
+        <div>
+          <span>{{ post.user?.username }}</span>
+          <!-- {{ formattedDate(item.createdAt) }} -->
+        </div>
+        <p>{{ post.title }}</p>
+        <p>{{ post.content }}</p>
+
+      </div>
+    </section>
   </div>
 </template>
 
 <script>
-import { toRaw } from "@vue/reactivity";
-import Chip from '../components/Chip.vue';
+import Chip from "../components/Chip.vue";
 import postService from "../services/posts";
 import userService from "../services/users";
 
@@ -36,7 +47,7 @@ const id = window.localStorage.getItem("id");
 // postService.setToken(token);
 
 export default {
-    components: {
+  components: {
     Chip,
   },
   data() {
@@ -45,6 +56,8 @@ export default {
       username: "",
       interests: [],
       interest: "",
+      savedPostsId: [],
+      savedPosts: [],
     };
   },
   methods: {
@@ -54,7 +67,8 @@ export default {
         this.user = response.data;
         this.username = this.user.username;
         this.interests = this.user.interests;
-        console.log(`interests ${this.interests}`)
+        this.savedPostsId = this.user.savedPosts;
+        console.log(`saved ${this.savedPostsId}`);
       } catch (error) {
         this.errorMessage =
           error.message || "An error occurred while fetching posts.";
@@ -63,14 +77,26 @@ export default {
     async update() {
       try {
         const updatedUser = {
-            username: this.username,
-            interests: this.interests
-        }
-          this.errorMessage = "";
-          const response = await userService.update(id, updatedUser)
-          this.getUser(id);
+          username: this.username,
+          interests: this.interests,
+        };
+        this.errorMessage = "";
+        const response = await userService.update(id, updatedUser);
+        this.getUser(id);
       } catch (error) {
         this.errorMessage = "An error occurred";
+      }
+    },
+    async getSavedPosts() {
+      try {
+        const response = await postService.getAll();
+        this.savedPosts = response.filter((post) =>
+          this.savedPostsId.includes(post.id)
+        );
+        console.log(this.savedPosts);
+      } catch (error) {
+        this.errorMessage =
+          error.message || "An error occurred while fetching posts.";
       }
     },
 
@@ -83,14 +109,35 @@ export default {
     addInterest() {
       if (this.interest.trim() !== "") {
         this.interests.push(this.interest);
-        console.log(this.interests)
+        console.log(this.interests);
         this.interest = ""; // Clear the input after adding the interest
       }
     },
   },
   created() {
     this.getUser(id);
-    console.log('initialized...', toRaw(this.username), toRaw(this.interests));
+    this.getSavedPosts();
   },
 };
 </script>
+
+<style scoped>
+input {
+  margin: 1rem 0;
+  padding: 1rem;
+}
+
+.saved__container{
+  display: flex;
+  gap: 2.2rem;
+  flex-wrap: wrap;
+  padding-top: 2rem;
+}
+
+.saved__item{
+  flex-basis: 30%;
+  background: white;
+  border-radius: 20px;
+  padding: 1rem;
+}
+</style>

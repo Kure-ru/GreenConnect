@@ -13,10 +13,6 @@ const getAll = () => {
   return request.then((response) => response.data);
 };
 
-// const get = (id) => {
-//     const request = axios.get(`${ baseUrl }/${id}`)
-//     return request.then(response => response.data)
-// }
 
 const post = async (newObject) => {
   const config = {
@@ -26,15 +22,14 @@ const post = async (newObject) => {
   return response.data;
 };
 
-// const update = (id, newObject) => {
-//     const request = axios.put(`${ baseUrl }/${id}`, newObject)
-//     return request.then(response => response.data)
-// }
-
-// const deleteBlog = (id) => {
-//     const request = axios.delete(`${ baseUrl }/${id}`)
-//     return request.then(response => response.data)
-// }
+const deletePost = async (id) => {
+  const config = {
+    headers: { Authorization: token },
+  };
+  console.log('service')
+    const response = await axios.delete(`${baseUrl}/${id}`, config)
+    return response.data
+}
 
 // eslint-disable-next-line import/no-anonymous-default-export
-export default { post, setToken, getAll };
+export default { post, setToken, getAll, deletePost };

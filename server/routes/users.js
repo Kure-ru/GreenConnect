@@ -5,7 +5,7 @@ const bcrypt = require("bcrypt");
 
 const User = require("../models/user");
 
-// authentification
+// authentication
 usersRouter.post("/login", async (req, res) => {
   const { username, password } = req.body;
   console.log(username);
@@ -67,9 +67,8 @@ usersRouter.put("/:id", async (request, response, next) => {
 // afficher profil
 usersRouter.get("/:id", async (request, response) => {
   const user = await User.findById(request.params.id);
-  console.log(request.params.id)
   if (user) {
-    console.log(`user is ${user}`)
+    console.log(`user is ${user}`);
     response.json(user);
   } else {
     response.status(404).end();
@@ -77,9 +76,41 @@ usersRouter.get("/:id", async (request, response) => {
 });
 
 // afficher tous les utilisateurs
-usersRouter.get("/", (req, res) => {
-  console.log("users");
-  // populate
+usersRouter.get("/", (req, res) => {});
+
+usersRouter.post("/:userId/:postId", async (req, res, next) => {
+  try {
+    const userId = req.params.userId;
+    const savedPostId = req.params.postId;
+
+    const updatedUser = await User.findByIdAndUpdate(
+      userId,
+      { $push: { savedPosts: savedPostId } },
+      { new: true }
+    );
+
+    res.json(updatedUser);
+  } catch (error) {
+    next(error);
+  }
+});
+
+
+usersRouter.delete("/:userId/:postId", async (req, res, next) => {
+  try {
+    const userId = req.params.userId;
+    const postIdToDelete = req.params.postId;
+
+    const updatedUser = await User.findByIdAndUpdate(
+      userId,
+      { $pull: { savedPosts: postIdToDelete } },
+      { new: true }
+    );
+
+    res.json(updatedUser);
+  } catch (error) {
+    next(error);
+  }
 });
 
 module.exports = usersRouter;

@@ -33,6 +33,19 @@ const update = (id, newObject) => {
 };
 
 
+const addSavedPost =  async (userId, postId) => {
+  console.log("added")
+  const response = await axios.post(`${baseUrl}/${userId}/${postId}`);
+  return response.data;
+};
+
+const removeSavedPost =  async (userId, postId) => {
+  console.log("removed")
+  const response = await axios.delete(`${baseUrl}/${userId}/${postId}`);
+  return response.data;
+};
+
+
 
 // eslint-disable-next-line import/no-anonymous-default-export
-export default { login, getUser, create, update, setToken };
+export default { login, getUser, create, update, setToken, addSavedPost, removeSavedPost };

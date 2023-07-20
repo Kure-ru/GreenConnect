@@ -1,23 +1,35 @@
-<script setup></script>
-
 <template>
   <nav>
     <router-link to="/"><h2>GreenConnect</h2></router-link>
-    <router-link to="/login">Se connecter</router-link>
-    <router-link to="/signup">Rejoignez-nous</router-link>
-    <router-link to="/profile">Mon profil</router-link>
-    <button @click="logout">Se déconnecter</button>
+    <router-link v-if="!authenticated" to="/login">Se connecter</router-link>
+    <router-link v-if="!authenticated" to="/signup">Rejoignez-nous</router-link>
+    <router-link v-if="authenticated" to="/profile">Mon profil</router-link>
+    <router-link v-if="authenticated" to="/feed">Toutes les actus</router-link>
+    <button v-if="authenticated" @click="logout">Se déconnecter</button>
   </nav>
 </template>
 
 <script>
 export default {
+  data() {
+    return {
+      authenticated: false,
+    };
+  },
   methods: {
     logout() {
       window.localStorage.removeItem("jwttoken");
-      this.$router.push("/"); 
+      this.$router.push("/");
+      this.authenticated = false;
     },
   },
+  created() {
+    const token = window.localStorage.getItem("jwttoken");
+    if (token) {
+      this.authenticated = true;
+    }
+  },
+  
 };
 </script>
 
@@ -25,6 +37,7 @@ export default {
 nav {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 3rem;
   padding-bottom: 1.5rem;
 }
