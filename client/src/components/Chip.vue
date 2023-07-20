@@ -12,11 +12,15 @@
   <style scoped>
   .chip {
     display: inline-block;
-    background-color: white;
+    background: white;
     padding: 5px 10px;
     margin: 5px;
     border-radius: 20px;
     cursor: pointer;
+  }
+
+  .chip:hover{
+    background: rgb(195, 195, 195);
   }
   
   button {
