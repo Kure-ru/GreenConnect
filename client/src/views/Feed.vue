@@ -1,4 +1,5 @@
 <template>
+  <main>
   <h1>Toutes les actualités</h1>
 
   <form class="feed__form" @submit.prevent="newPost">
@@ -45,6 +46,7 @@
       </button>
     </div>
   </section>
+</main>
 </template>
 
 <script>
@@ -154,6 +156,9 @@ export default {
 </script>
 
 <style>
+main{
+  min-width: 90vw;
+}
 h1 {
   margin-bottom: 2rem;
 }

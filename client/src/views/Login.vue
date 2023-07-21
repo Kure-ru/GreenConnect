@@ -1,4 +1,5 @@
 <template>
+  <main>
   <div class="login-container">
     <form @submit.prevent="login">
       <div class="form-group">
@@ -16,6 +17,7 @@
 
     <div v-if="errorMessage" class="error-message">{{ errorMessage }}</div>
   </div>
+</main>
 </template>
 
 <script>
@@ -57,9 +59,13 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
+
+main{
+  min-width: 90vw;
+}
 .login-container {
-  max-width: 400px;
+
   margin: 0 auto;
   padding: 20px;
 }

@@ -3,8 +3,8 @@
 
 Green Connect is a web application that aims to promote sustainable living and environmental awareness among users. The platform allows users to share their eco-friendly practices, exchange tips on sustainable living, and discover the latest eco-conscious trends. Through Green Connect, users can post their environmentally friendly achievements, connect with like-minded individuals, and collaborate on impactful projects to create a greener world.
 
-![green connect homepage](preview.gif)
-
+![green connect homepage](preview.jpeg)
+[Lien vers le site](https://greenconnect-hitf.onrender.com/)
 
 ## Features
 
@@ -20,6 +20,9 @@ Green Connect is a web application that aims to promote sustainable living and e
  - [Design inspired by Zlatko Najdenovski](https://dribbble.com/shots/16232229-Tribevibe-website-homepage)
 - [Oh, Vue Icons!](https://oh-vue-icons.js.org/)
 - [Build A Custom Modal Component In Vue.js](https://vuejsexamples.com/build-a-custom-modal-component-in-vue-js/)
+- [About
+Animate on scroll library](https://github.com/michalsnik/aos)
+
 
 
 ## Made with

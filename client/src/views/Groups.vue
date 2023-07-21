@@ -1,4 +1,5 @@
 <template>
+  <main>
   <h1>Groupes</h1>
   <section class="groups__container">
     <div v-for="group in groupItems" :key="group.id" class="card__wrapper">
@@ -12,8 +13,10 @@
     </div>
   </section>
 
+
   <button @click="showModal = true">créer un nouveau groupe</button>
   <Modal v-show="showModal" @close-modal="showModal = false" />
+</main>
 </template>
 
 <script>
@@ -88,6 +91,9 @@ export default {
 </script>
 
 <style scoped>
+main{
+  min-width: 90vw;
+}
 .groups__container {
   padding: 2rem 0;
   display: flex;

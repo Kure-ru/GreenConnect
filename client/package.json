@@ -8,6 +8,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@formkit/auto-animate": "^0.7.0",
+    "aos": "^2.3.4",
     "axios": "^1.4.0",
     "date-fns": "^2.30.0",
     "oh-vue-icons": "^1.0.0-rc3",
