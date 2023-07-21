@@ -6,44 +6,78 @@
       Vous ne les avez juste pas encore rencontrés.
     </h2>
 
-    <div>
-      <figure>
+    <div class="story">
+      <div class="story__content">
+        <div class="story__content__heading">
+          <h1 class="hero__title">Faisons bouger les choses ensemble !</h1>
+        </div>
+      </div>
+      <figure class="story__globe">
         <img
-          class="hero__img"
+          class="globe__img"
           src="/hero.png"
           alt="globe avec photos d'utilisateurs"
         />
       </figure>
-      <div class="title__container">
-        <h1 class="hero__title">Faisons bouger les choses ensemble !</h1>
-      </div>
     </div>
   </div>
 </template>
 
 <style>
+* {
+  box-sizing: border-box;
+}
+
 .hero {
+  width: 100vw;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
-figure {
-  margin-top: 150px;
-  animation: rotation 100s infinite linear;
-  position: relative;
+
+.story {
+  display: flex;
+  overflow: visible;
+  justify-content: center;
+  max-width: 100vh;
 }
 
-.hero__img {
-  max-width: 100%;
+figure {
+  transform: translate3d(0px, 0px, 0px) scale3d(1, 1, 1) rotateX(0deg)
+    rotateY(0deg) rotateZ(335.477deg) skew(0deg, 0deg);
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+.story__globe {
+  position: relative;
+  z-index: 50;
+  width: 1420px;
+  height: 1420px;
+  margin-bottom: 0;
+  padding: 0px 0;
+  animation: rotateAnimation 30s infinite linear;
+}
+
+.globe__img {
+  width: 100%;
+  height: 100%;
   object-fit: contain;
 }
 
+img {
+  max-width: 100%;
+  vertical-align: middle;
+  display: inline-block;
+}
+
 .hero__title {
-  font-size: clamp(1.2rem, 3.5vw, 3rem);
-  width: 500px;
-  position: absolute;
-  bottom: 500px;
-  left: 340px;
+  font-size: 2rem;
+  width: 350px;
+  position: relative;
+  top: 650px;
+  left: 50%;
+  transform: translateX(-50%);
   color: #f2efe6;
   text-align: center;
 }
@@ -54,66 +88,28 @@ figure {
   transform-style: preserve-3d;
 }
 
-.hero__subtitle {
-  z-index: 5;
-  position: relative;
-  margin-bottom: -2rem;
-  padding-top: 2rem;
+.story__content {
+  position: absolute;
+  z-index: 150;
+  max-width: 560px;
+  color: white;
+  text-align: center;
 }
-@keyframes rotation {
+
+.story__content__heading {
+  transform: translate3d(0px, 0px, 0px) scale3d(1, 1, 1) rotateX(0deg)
+    rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg);
+  opacity: 1;
+  transform-style: preserve-3d;
+  margin-bottom: 36px;
+}
+
+@keyframes rotateAnimation {
   from {
     transform: rotate(0deg);
   }
   to {
     transform: rotate(359deg);
-  }
-}
-
-@media (max-width: 1200px) {
-  .hero__title {
-    width: 450px;
-    bottom: 400px;
-    left: 280px;
-  }
-}
-
-@media (max-width: 992px) {
-  .hero__title {
-    width: 350px;
-    bottom: 350px;
-    left: 250px;
-  }
-}
-
-@media (max-width: 768px) {
-  .hero__title {
-    width: 400px;
-    bottom: 350px;
-    left: 160px;
-  }
-}
-
-@media (max-width: 576px) {
-  .hero__title {
-    width: 300px;
-    bottom: 200px;
-    left: 110px;
-  }
-}
-
-@media (max-width: 576px) {
-  .hero__title {
-    width: 300px;
-    bottom: 200px;
-    left: 110px;
-  }
-}
-
-@media (max-width: 576px) {
-  .hero__title {
-    width: 200px;
-    bottom: 150px;
-    left: 110px;
   }
 }
 </style>
