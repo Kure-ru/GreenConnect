@@ -1,44 +1,24 @@
 <template>
   <nav>
     <router-link to="/"><h2>GreenConnect</h2></router-link>
-    <router-link v-if="!authenticated" to="/login">Se connecter</router-link>
-    <router-link v-if="!authenticated" to="/signup">Rejoignez-nous</router-link>
-    <router-link v-if="authenticated" to="/profile">Mon profil</router-link>
-    <router-link v-if="authenticated" to="/feed">Toutes les actus</router-link>
-    <router-link v-if="authenticated" to="/groups">Groupes</router-link>
-    <button v-if="authenticated" @click="logout">Se déconnecter</button>
+    <HamburgerMenu />
   </nav>
 </template>
 
 <script>
+import HamburgerMenu from "./HamburgerMenu.vue";
+
 export default {
-  data() {
-    return {
-      authenticated: false,
-    };
-  },
-  methods: {
-    logout() {
-      window.localStorage.removeItem("jwttoken");
-      this.$router.push("/");
-      this.authenticated = false;
-    },
-  },
-  created() {
-    const token = window.localStorage.getItem("jwttoken");
-    if (token) {
-      this.authenticated = true;
-    }
-  },
-  
+  components: { HamburgerMenu },
 };
 </script>
 
 <style scoped>
 nav {
+  height: 80px;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
   gap: 3rem;
   padding-bottom: 1.5rem;
 }
@@ -49,12 +29,10 @@ a {
 }
 
 h2 {
+  font-size: 2.2rem;
   font-weight: 700;
   color: #005959;
 }
 
-a {
-  color: #0a0c0d;
-  cursor: pointer;
-}
+
 </style>
