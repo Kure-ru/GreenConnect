@@ -68,7 +68,6 @@ usersRouter.put("/:id", async (request, response, next) => {
 usersRouter.get("/:id", async (request, response) => {
   const user = await User.findById(request.params.id);
   if (user) {
-    console.log(`user is ${user}`);
     response.json(user);
   } else {
     response.status(404).end();
@@ -78,6 +77,7 @@ usersRouter.get("/:id", async (request, response) => {
 // afficher tous les utilisateurs
 usersRouter.get("/", (req, res) => {});
 
+// ajouter post sauvegarde
 usersRouter.post("/:userId/:postId", async (req, res, next) => {
   try {
     const userId = req.params.userId;
@@ -95,7 +95,7 @@ usersRouter.post("/:userId/:postId", async (req, res, next) => {
   }
 });
 
-
+// supprimer post sauvegarde
 usersRouter.delete("/:userId/:postId", async (req, res, next) => {
   try {
     const userId = req.params.userId;
@@ -104,6 +104,43 @@ usersRouter.delete("/:userId/:postId", async (req, res, next) => {
     const updatedUser = await User.findByIdAndUpdate(
       userId,
       { $pull: { savedPosts: postIdToDelete } },
+      { new: true }
+    );
+
+    res.json(updatedUser);
+  } catch (error) {
+    next(error);
+  }
+});
+
+// ajouter groupe sauvegarde
+usersRouter.post("/:userId/group/:groupId", async (req, res, next) => {
+ console.log('add groupe route')
+  try {
+    const userId = req.params.userId;
+    const savedGroupId = req.params.groupId;
+
+    const updatedUser = await User.findByIdAndUpdate(
+      userId,
+      { $push: { groups: savedGroupId } },
+      { new: true }
+    );
+
+    res.json(updatedUser);
+  } catch (error) {
+    next(error);
+  }
+});
+
+// supprimer groupe sauvegarde
+usersRouter.delete("/:userId/group/:groupId", async (req, res, next) => {
+  try {
+    const userId = req.params.userId;
+    const groupIdToDelete = req.params.groupId;
+
+    const updatedUser = await User.findByIdAndUpdate(
+      userId,
+      { $pull: { groups: groupIdToDelete } },
       { new: true }
     );
 

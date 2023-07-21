@@ -4,6 +4,7 @@ import Login from "@/views/Login.vue";
 import Signup from "@/views/Signup.vue";
 import Feed from "@/views/Feed.vue";
 import Profile from "@/views/Profile.vue";
+import Groups from "@/views/Groups.vue";
 
 const routes = [
   {
@@ -33,6 +34,14 @@ const routes = [
     path: "/profile",
     name: "Profile",
     component: Profile,
+    meta: {
+      requiresAuth: true,
+    },
+  },
+  {
+    path: "/groups",
+    name: "Groups",
+    component: Groups,
     meta: {
       requiresAuth: true,
     },

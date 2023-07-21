@@ -19,6 +19,7 @@ Green Connect is a web application that aims to promote sustainable living and e
  - [Vue documentation](https://vuejs.org/guide/introduction.html)
  - [Design inspired by Zlatko Najdenovski](https://dribbble.com/shots/16232229-Tribevibe-website-homepage)
 - [Oh, Vue Icons!](https://oh-vue-icons.js.org/)
+- [Build A Custom Modal Component In Vue.js](https://vuejsexamples.com/build-a-custom-modal-component-in-vue-js/)
 
 
 ## Made with
