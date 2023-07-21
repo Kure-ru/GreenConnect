@@ -5,6 +5,7 @@
     <router-link v-if="!authenticated" to="/signup">Rejoignez-nous</router-link>
     <router-link v-if="authenticated" to="/profile">Mon profil</router-link>
     <router-link v-if="authenticated" to="/feed">Toutes les actus</router-link>
+    <router-link v-if="authenticated" to="/groups">Groupes</router-link>
     <button v-if="authenticated" @click="logout">Se déconnecter</button>
   </nav>
 </template>

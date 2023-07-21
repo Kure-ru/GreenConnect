@@ -8,6 +8,7 @@ const middleware = require('./utils/middleware')
 
 const usersRouter = require("./routes/users");
 const postsRouter = require("./routes/posts");
+const groupsRouter = require("./routes/groups");
 
 
 const app = express();
@@ -33,6 +34,7 @@ app.use(express.static("build"));
 // Routes
 app.use("/users", usersRouter);
 app.use("/posts", postsRouter);
+app.use("/groups", groupsRouter);
 
 app.use(middleware.unknownEndpoint)
 app.use(middleware.errorHandler)

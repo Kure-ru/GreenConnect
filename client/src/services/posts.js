@@ -1,10 +1,9 @@
 import axios from "axios";
-const baseUrl = "/posts";
+const baseUrl = "http://localhost:2121/posts";
 
 let token = null;
 
 const setToken = (newToken) => {
-  console.log("token");
   token = `Bearer ${newToken}`;
 };
 

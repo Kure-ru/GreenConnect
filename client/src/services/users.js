@@ -1,5 +1,5 @@
 import axios from "axios";
-const baseUrl = "/users";
+const baseUrl = "http://localhost:2121/users";
 
 let token = null;
 
@@ -45,7 +45,19 @@ const removeSavedPost =  async (userId, postId) => {
   return response.data;
 };
 
+const addSavedGroup =  async (userId, groupId) => {
+  console.log("added")
+  const response = await axios.post(`${baseUrl}/${userId}/group/${groupId}`);
+  return response.data;
+};
+
+
+const removeSavedGroup =  async (userId, groupId) => {
+  console.log("removed")
+  const response = await axios.delete(`${baseUrl}/${userId}/group/${groupId}`);
+  return response.data;
+};
 
 
 // eslint-disable-next-line import/no-anonymous-default-export
-export default { login, getUser, create, update, setToken, addSavedPost, removeSavedPost };
+export default { login, getUser, create, update, setToken, addSavedPost, removeSavedPost, addSavedGroup, removeSavedGroup };
