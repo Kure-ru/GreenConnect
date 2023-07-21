@@ -4,6 +4,8 @@
 Green Connect is a web application that aims to promote sustainable living and environmental awareness among users. The platform allows users to share their eco-friendly practices, exchange tips on sustainable living, and discover the latest eco-conscious trends. Through Green Connect, users can post their environmentally friendly achievements, connect with like-minded individuals, and collaborate on impactful projects to create a greener world.
 
 ![green connect homepage](preview.jpeg)
+
+
 [Lien vers le site](https://greenconnect-hitf.onrender.com/)
 
 ## Features
