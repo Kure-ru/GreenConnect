@@ -19,14 +19,18 @@
         <router-link to="/groups">Groupes</router-link>
       </li>
       <li v-if="authenticated">
-        <button @click="logout">Se déconnecter</button>
+        <Button @click="logout" text="Se déconnecter"/>
       </li>
     </ul>
 </div>
 </template>
 
 <script>
+import Button from './Button.vue';
 export default {
+  components:{
+    Button
+  },
   data() {
     return {
       isOpen: false,
@@ -59,6 +63,7 @@ export default {
 
 
 ul {
+  border-radius: 20px;
     position: absolute;
     top: 96px;
     right: 1rem;
@@ -70,6 +75,7 @@ ul {
     background: #f8f5ed;
     box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
   padding-left: 1rem;
+  z-index: 99;
   }
 
 

@@ -1,32 +1,32 @@
 <template>
   <main>
-  <h1>Groupes</h1>
-  <section class="groups__container">
-    <div v-for="group in groupItems" :key="group.id" class="card__wrapper">
-      <Card
-        :id="group.id"
-        :title="group.title"
-        :description="group.description"
-        :selected="isSelected(group.id)"
-        @toggle-joined-group="toggleGroup"
-      />
-    </div>
-  </section>
+    <h1>Groupes</h1>
+    <section class="groups__container">
+      <div v-for="group in groupItems" :key="group.id" class="card__wrapper">
+        <Card
+          :id="group.id"
+          :title="group.title"
+          :description="group.description"
+          :selected="isSelected(group.id)"
+          @toggle-joined-group="toggleGroup"
+        />
+      </div>
+    </section>
 
-
-  <button @click="showModal = true">créer un nouveau groupe</button>
-  <Modal v-show="showModal" @close-modal="showModal = false" />
-</main>
+    <Button @click="showModal = true" text="créer un nouveau groupe" />
+    <Modal v-show="showModal" @close-modal="showModal = false" />
+  </main>
 </template>
 
 <script>
 import Modal from "../components/Modal.vue";
 import Card from "../components/Card.vue";
+import Button from "../components/Button.vue";
 import groupService from "../services/groups";
 import userService from "../services/users";
 
 export default {
-  components: { Modal, Card },
+  components: { Modal, Card, Button },
   data() {
     return {
       showModal: false,
@@ -46,7 +46,6 @@ export default {
       }
     },
     async toggleGroup(groupId) {
-      console.log("yohhl");
       try {
         const isGroupJoined = this.joinedGroups.includes(groupId);
         if (isGroupJoined) {
@@ -91,7 +90,7 @@ export default {
 </script>
 
 <style scoped>
-main{
+main {
   min-width: 90vw;
 }
 .groups__container {

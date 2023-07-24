@@ -21,9 +21,6 @@ const props = defineProps(["id", "title", "description", "selected"]);
 const emit = defineEmits(["toggleJoinedGroups"]);
 </script>
 
-<script>
-</script>
-
 <style scoped>
 .card {
   min-width: 22.5rem;

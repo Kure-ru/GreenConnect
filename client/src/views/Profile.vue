@@ -19,7 +19,7 @@
         placeholder="ajouter un intérêt ↵ "
       />
     </div>
-    <button type="submit">Sauvegarder le profil</button>
+    <Button text="Sauvegarder le profil" type="submit"/>
   </form>
   <div>
     <h2>Mes posts sauvegardés</h2>
@@ -40,6 +40,7 @@
 
 <script>
 import Chip from "../components/Chip.vue";
+import Button from "../components/Button.vue";
 import postService from "../services/posts";
 import userService from "../services/users";
 
@@ -49,6 +50,7 @@ const id = window.localStorage.getItem("id");
 export default {
   components: {
     Chip,
+    Button
   },
   data() {
     return {
