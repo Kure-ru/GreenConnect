@@ -1,63 +1,51 @@
 <template>
   <main>
-  <h1>Toutes les actualités</h1>
+    <h1>Toutes les actualités</h1>
 
-  <form class="feed__form" @submit.prevent="newPost">
-    <h2>Quoi de neuf?</h2>
-    <div>
-      <label for="title">titre</label>
-      <input id="title" v-model="title" required />
-    </div>
-    <div>
-      <label for="content">message</label>
-      <input id="content" v-model="content" required />
-    </div>
-
-    <button type="submit">publier</button>
-  </form>
-
-  <section class="feed__container">
-    <div v-for="item in feedItems" :key="item.id" class="feed__item">
-      <div class="item__top">
-        <div>
-          <span>{{ item.user?.username }}</span>
-          {{ formattedDate(item.createdAt) }}
-        </div>
-        <div v-if="item.user?.id === this.userId">
-          <v-icon
-            @click="deletePost(item.id)"
-            class="delete__icon"
-            name="io-close"
-            scale="1.5"
-          />
-        </div>
+    <form class="feed__form" @submit.prevent="newPost">
+      <h2>Quoi de neuf?</h2>
+      <div>
+        <label for="title">titre</label>
+        <input id="title" v-model="title" required />
       </div>
-      <p>{{ item.title }}</p>
-      <p>{{ item.content }}</p>
+      <div>
+        <label for="content">message</label>
+        <input id="content" v-model="content" required />
+      </div>
+      <Button text="publier" />
+      <!-- <button type="submit">publier</button> -->
+    </form>
 
-      <button
-        @click="toggleSavePost(item.id)"
-        :class="
-          savedPosts.includes(item.id) ? 'item__btn --selected' : 'item__btn'
-        "
-      >
-        <v-icon name="ri-leaf-line" />
-        sauvegarder
-      </button>
+    <section class="feed__container">
+      <div v-for="item in feedItems" :key="item.id" class="feed__item">
+        <StackedCard  
+        :id="item.id"
+        :username="item.user?.username"
+        :date="formattedDate(item.createdAt)"
+        :authored="item.user?.id === this.userId"
+        :title="item.title"
+        :content="item.content"
+        :selected="isSelected(item.id)"
+        @toggle-save-post="toggleSavePost"
+        />
     </div>
-  </section>
-</main>
+    </section>
+    
+  </main>
 </template>
 
 <script>
 import { format } from "date-fns";
 import postService from "../services/posts";
 import userService from "../services/users";
+import StackedCard from "../components/StackedCard.vue";
+import Button from "../components/Button.vue";
 
 const token = window.localStorage.getItem("jwttoken");
 postService.setToken(token);
 
 export default {
+  components: { Button, StackedCard },
   data() {
     return {
       title: "",
@@ -88,7 +76,7 @@ export default {
       try {
         const response = await postService.getAll();
         this.feedItems = response;
-        console.log(response[0].user.id)
+        console.log(response[0].user.id);
       } catch (error) {
         this.errorMessage =
           error.message || "An error occurred while fetching posts.";
@@ -133,6 +121,9 @@ export default {
         console.error("Error toggling the save status: ", error);
       }
     },
+    isSelected(postId) {
+      return this.savedPosts.includes(postId);
+    },
   },
   created() {
     // Fetch all posts when the component is created
@@ -156,7 +147,7 @@ export default {
 </script>
 
 <style>
-main{
+main {
   min-width: 90vw;
 }
 h1 {
@@ -170,17 +161,12 @@ h1 {
   gap: 4rem;
 }
 .feed__item {
-  background: white;
   display: flex;
   flex-direction: column;
+  align-items: center;
   padding: 1rem;
   border-radius: 20px;
   width: 100%;
-}
-
-button {
-  border-radius: 15px;
-  margin: 1rem;
 }
 
 .item__btn {

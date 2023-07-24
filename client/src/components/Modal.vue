@@ -11,11 +11,9 @@
           <label for="description">Description</label>
           <input v-model="description" minlength="10" required />
         </div>
-        <div>
-          <button type="submit">Valider</button>
-          <button @click="$emit('close-modal')" id="cancel" type="button">
-            Annuler
-          </button>
+        <div class="modal__btn__container">
+          <Button type="submit" text="Valider"/>
+          <Button  @click="$emit('close-modal')" id="cancel" type="button" text="Annuler"/>
         </div>
       </form>
     </div>
@@ -25,11 +23,15 @@
 
 <script>
 import groupService from "../services/groups";
+import Button from "./Button.vue";
 
 const token = window.localStorage.getItem("jwttoken");
 groupService.setToken(token);
 
 export default {
+  components: {
+    Button
+  },
   data() {
     return {
       title: "",
@@ -95,5 +97,10 @@ label {
 
 #cancel {
   background: rgb(181, 181, 181);
+}
+
+.modal__btn__container{
+  display: flex;
+  justify-content: space-evenly;
 }
 </style>
