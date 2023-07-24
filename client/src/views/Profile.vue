@@ -19,28 +19,26 @@
         placeholder="ajouter un intérêt ↵ "
       />
     </div>
-    <Button text="Sauvegarder le profil" type="submit"/>
+    <Button text="Sauvegarder le profil" type="submit" />
   </form>
-  <div>
-    <h2>Mes posts sauvegardés</h2>
+  <h2>Mes posts sauvegardés</h2>
+  <div class="saved__items">
 
-    <section class="saved__container">
-      <div v-for="post in savedPosts" :key="post.id" class="saved__item">
-        <div>
-          <span>{{ post.user?.username }}</span>
-          <!-- {{ formattedDate(item.createdAt) }} -->
-        </div>
-        <p>{{ post.title }}</p>
-        <p>{{ post.content }}</p>
-
-      </div>
-    </section>
+    <div v-for="post in savedPosts" :key="post.id" class="saved__item">
+      <StackedCard
+        :id="post.id"
+        :username="post.user?.username"
+        :title="post.title"
+        :content="post.content"
+      />
+    </div>
   </div>
 </template>
 
 <script>
 import Chip from "../components/Chip.vue";
 import Button from "../components/Button.vue";
+import StackedCard from "../components/StackedCard.vue";
 import postService from "../services/posts";
 import userService from "../services/users";
 
@@ -50,7 +48,8 @@ const id = window.localStorage.getItem("id");
 export default {
   components: {
     Chip,
-    Button
+    Button,
+    StackedCard,
   },
   data() {
     return {
@@ -129,17 +128,29 @@ input {
   padding: 1rem;
 }
 
-.saved__container{
+.saved__container {
   display: flex;
   gap: 2.2rem;
   flex-wrap: wrap;
   padding-top: 2rem;
 }
 
-.saved__item{
-  flex-basis: 30%;
-  background: white;
+.saved__items {
+  display: flex;
+  flex-direction: column-reverse;
+  gap: 1rem;
   border-radius: 20px;
   padding: 1rem;
+}
+
+.saved__item {
+  flex-basis: 30%;
+}
+
+@media (max-width: 768px) {
+  .saved__items {
+
+  flex-direction: row-reverse;
+}
 }
 </style>

@@ -93,9 +93,20 @@ export default {
 main {
   min-width: 90vw;
 }
+
+.card__wrapper{
+max-width: 90%;
+}
 .groups__container {
   padding: 2rem 0;
   display: flex;
+  flex-direction: column;
   gap: 1.25rem;
+}
+
+@media  (min-width: 768px) {
+  .groups__container {
+    flex-direction: row;
+  }
 }
 </style>

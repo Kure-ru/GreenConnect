@@ -23,7 +23,7 @@ const emit = defineEmits(["toggleJoinedGroups"]);
 
 <style scoped>
 .card {
-  min-width: 22.5rem;
+  max-width: 22.5rem;
   min-height: 5rem;
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
   display: flex;
@@ -31,6 +31,8 @@ const emit = defineEmits(["toggleJoinedGroups"]);
   align-items: center;
   border-radius: 12px;
   background: #fbfaf7;
+  gap: .5rem;
+  padding: .5rem;
 }
 
 .card__mono {
@@ -59,4 +61,6 @@ h3 {
 span {
   font-size: 1rem;
 }
+
+
 </style>

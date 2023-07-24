@@ -8,7 +8,7 @@
       <h4>{{ title }}</h4>
       <p>{{ content }}</p>
     </div>
-    <div class="stackedcard__buttons">
+    <div v-if="date" class="stackedcard__buttons">
       <Button
         :class="selected ? '--selected' : '--unselected'"
         @click="emit('toggle-save-post', props.id)"
@@ -51,9 +51,9 @@ export default {
 
 <style scoped>
 .card {
-width: 50%;
+width: 90%;
+max-width: 600px;
   min-height: 5rem;
-
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
   display: flex;
   flex-direction: column;
